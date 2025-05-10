@@ -1,7 +1,8 @@
 {
-    "name": "troliveira/sped-nfse-egoverne",
+    "name": "tiagofranco86/sped-nfse-egoverne",
     "type": "library",
     "description": "API para geração e comunicação de RPS e NFSe no padão E-Governe.",
+    "version": "0.0.4",
     "keywords": ["nfe","nfse","sped","nfephp"],
     "homepage": "https://github.com/nfephp-org/sped-nfse-egoverne",
     "license": ["LGPL-3.0-or-later", "GPL-3.0-or-later", "MIT"],

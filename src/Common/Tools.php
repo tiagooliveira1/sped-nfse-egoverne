@@ -32,16 +32,17 @@ class Tools
     protected $wsobj;
     protected $soap;
     protected $environment;
+    protected $xmlRequest;
     
     protected $urls = [
         '4106902' => [
             'municipio' => 'Curitiba',
             'uf' => 'PR',
             'homologacao' => 'https://piloto-iss.curitiba.pr.gov.br/nfse_ws/NfseWs.asmx',
-            'producao' => 'https://isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/nfsews.asmx',
+            'producao' => 'https://srv2-isscuritiba.curitiba.pr.gov.br/Iss.NfseWebService/nfsews.asmx',
             'version' => '2.01',
             'msgns' => 'http://isscuritiba.curitiba.pr.gov.br/iss/nfse.xsd',
-            'soapns' => 'http://www.e-governeapps2.com.br'
+            'soapns' => 'https://www.e-governeapps2.com.br'
         ]
     ];
     
@@ -122,7 +123,8 @@ class Tools
         }
         $request = $this->createSoapRequest($message, $operation);
         $this->lastRequest = $request;
-        
+        $this->xmlRequest  = $message;
+
         if (empty($this->soap)) {
             $this->soap = new SoapCurl($this->certificate);
         }
@@ -198,5 +200,10 @@ class Tools
         );
         $dom->insertAfter($node, $referenceNode);
         return $dom->saveXML($dom->documentElement);
+    }
+
+    public function getXmlRequest()
+    {
+        return $this->xmlRequest;    
     }
 }

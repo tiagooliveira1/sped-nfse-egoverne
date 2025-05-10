@@ -128,6 +128,7 @@ class SoapCurl extends SoapBase implements SoapInterface
                 curl_setopt($oCurl, CURLOPT_POSTFIELDS, $envelope);
                 curl_setopt($oCurl, CURLOPT_HTTPHEADER, $parameters);
             }
+            curl_setopt($oCurl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
             $response = curl_exec($oCurl);
             $this->soaperror = curl_error($oCurl);
             $ainfo = curl_getinfo($oCurl);
@@ -148,7 +149,7 @@ class SoapCurl extends SoapBase implements SoapInterface
             throw SoapException::unableToLoadCurl($e->getMessage());
         }
         if ($this->soaperror != '') {
-            throw SoapException::soapFault($this->soaperror . " [$url]");
+            throw SoapException::soapFault($this->soaperror . " [$url]", 500);
         }
         if ($httpcode != 200) {
             return "[$url] HTTP Error code: $httpcode - " . $this->http_codes[$httpcode];

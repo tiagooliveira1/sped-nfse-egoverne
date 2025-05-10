@@ -370,15 +370,7 @@ class Factory
             "CodigoMunicipio",
             $serv->codigomunicipio,
             true
-        );
-        $this->dom->addChild(
-            $node,
-            "ExigibilidadeISS",
-            isset($serv->exigibilidadeiss)
-                ? $serv->exigibilidadeiss
-                : null,
-            true
-        );
+        );        
 
         $parent->appendChild($node);
     }
@@ -454,12 +446,6 @@ class Factory
         }
         $ide->appendChild($cpfcnpj);
         
-        $this->dom->addChild(
-            $ide,
-            "InscricaoMunicipal",
-            isset($tom->inscricaomunicipal) ? $tom->inscricaomunicipal : null,
-            true
-        );
         $node->appendChild($ide);
         $this->dom->addChild(
             $node,

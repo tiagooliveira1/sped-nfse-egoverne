@@ -217,7 +217,7 @@ class Tools extends BaseTools
         }
 
         $content .= "<EnviarLoteRpsEnvio xmlns=\"{$this->wsobj->msgns}\">";
-        $content .=     "<LoteRps Id=\"ID{$lote}\">";
+        $content .=     "<LoteRps>";
         $content .=         "<NumeroLote>{$lote}</NumeroLote>";
         $content .=         "<Cnpj>{$this->config->cnpj}</Cnpj>";
         $content .=         "<InscricaoMunicipal>{$this->config->im}</InscricaoMunicipal>";
@@ -228,8 +228,8 @@ class Tools extends BaseTools
         $content .=     "</LoteRps>";
         $content .= "</EnviarLoteRpsEnvio>";
                                 
-        $content = $this->sign($content, 'LoteRps', '');
-        //Validator::isValid($content, $this->xsdpath);
+        $content = $this->sign($content, 'LoteRps', '');        
+        Validator::isValid($content, $this->xsdpath);
         
         try {
             return $this->send($content, $operation);
@@ -273,18 +273,10 @@ class Tools extends BaseTools
      * @return string
      */
     public function recepcionarXml($metodo, $xml)
-    {
-        $content = '';
-        $operation = 'RecepcionarXml';
+    {              
+        //Validator::isValid($xml, $this->xsdpath);
         
-        $content .= "<RecepcionarXml xmlns=\"{$this->wsobj->msgns}\">";
-        $content .=     "<metodo>{$metodo}</metodo>";
-        $content .=     "<xml>{$xml}</xml>";
-        $content .= "</RecepcionarXml>";
-        
-        Validator::isValid($content, $this->xsdpath);
-        
-        return $this->send($content, $operation);
+        return $this->send($xml, $metodo);
     }
     
     /**
