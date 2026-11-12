@@ -27,7 +27,7 @@ class SoapFake extends SoapBase implements SoapInterface
      * @param Certificate $certificate
      * @param LoggerInterface $logger
      */
-    public function __construct(Certificate $certificate = null, LoggerInterface $logger = null)
+    public function __construct(?Certificate $certificate = null, ?LoggerInterface $logger = null)
     {
         parent::__construct($certificate, $logger);
     }
