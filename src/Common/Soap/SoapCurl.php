@@ -23,7 +23,7 @@ use Psr\Log\LoggerInterface;
 
 class SoapCurl extends SoapBase implements SoapInterface
 {
-    
+
     protected $http_codes = [
         '100' => "Continue",
         '101' => "Switching Protocols",
@@ -67,7 +67,7 @@ class SoapCurl extends SoapBase implements SoapInterface
         '504' => "Gateway Timeout",
         '505' => "HTTP Version Not Supported"
     ];
-    
+
     /**
      * Constructor
      * @param Certificate $certificate
@@ -77,7 +77,7 @@ class SoapCurl extends SoapBase implements SoapInterface
     {
         parent::__construct($certificate, $logger);
     }
-    
+
     /**
      * Send soap message to url
      * @param string $operation
@@ -98,7 +98,7 @@ class SoapCurl extends SoapBase implements SoapInterface
         $response = '';
         $this->requestHead = implode("\n", $parameters);
         $this->requestBody = $envelope;
-        
+
         try {
             $this->saveTemporarilyKeyFiles();
             $oCurl = curl_init();
@@ -108,6 +108,8 @@ class SoapCurl extends SoapBase implements SoapInterface
             curl_setopt($oCurl, CURLOPT_CONNECTTIMEOUT, $this->soaptimeout);
             curl_setopt($oCurl, CURLOPT_TIMEOUT, $this->soaptimeout + 40);
             curl_setopt($oCurl, CURLOPT_HEADER, 1);
+            // add Tiago Oliveira 09/11/2020
+            curl_setopt($oCurl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
             curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, 0);
             if (!$this->disablesec) {
@@ -163,7 +165,7 @@ class SoapCurl extends SoapBase implements SoapInterface
         //return $this->responseBody . ' || ' . $this->requestBody;
         return $this->responseBody;
     }
-    
+
     /**
      * Recover WSDL form given URL
      * @param string $url
@@ -199,7 +201,7 @@ class SoapCurl extends SoapBase implements SoapInterface
         }
         return $response;
     }
-    
+
     /**
      * Set proxy into cURL parameters
      * @param resource $oCurl
@@ -216,7 +218,7 @@ class SoapCurl extends SoapBase implements SoapInterface
             }
         }
     }
-    
+
     /**
      * Extract faultstring form response if exists
      * @param string $body
